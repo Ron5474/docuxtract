@@ -1,30 +1,39 @@
 {
-  "name": "docuxtract",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.1",
-    "@mui/icons-material": "^7.2.0",
-    "@mui/material": "^7.2.0",
-    "express": "^5.1.0",
-    "next": "15.4.4",
-    "react": "19.1.0",
-    "react-dom": "19.1.0"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.4.4",
-    "typescript": "^5"
-  }
+    "name": "docuxtract-containerised",
+    "version": "1.0.0",
+    "description": "DocuXtract WebApp",
+    "author": "DocuXtract Inc.",
+    "license": "UNLICENSED",
+    "repository": "none",
+    "scripts": {
+        "package": "docker build . -t cte-linux-amd64 --platform linux/amd64 --no-cache && docker save -o cte-linux-amd64.tar cte-linux-amd64",
+        "containerised": "npm run build && npm run package",
+        "compose": "docker compose -f docker-compose.app.yml --profile prod up --build",
+        "installs": "npm install && npm run install-document && npm run install-app",
+        "install-document": "cd microservice/DocumentService && npm install",
+        "install-app": "cd app/ && npm install",
+        "cis": "npm ci && npm run ci-document && npm run ci-app",
+        "ci-document": "cd microservice/DocumentService && npm ci",
+        "ci-app": "cd app/ && npm ci",
+        "build": "npm run build-document && npm run build-app",
+        "build-document": "cd microservice/DocumentService && npm run build",
+        "build-app": "cd app/ && npm run build",
+        "start": "concurrently --kill-others \"npm run start-document\" \"npm run start-app\"",
+        "start-document": "cd microservice/DocumentService && npm start",
+        "start-app": "cd app/ && npm start",
+        "dev": "concurrently --kill-others \"npm run dev-document\" \"npm run dev-app\"",
+        "dev-document": "cd microservice/DocumentService && npm run dev",
+        "dev-app": "cd app/ && npm run dev",
+        "lint": "npm run lint-document && npm run lint-app",
+        "lint-document": "cd microservice/DocumentService && npm run lint",
+        "lint-app": "cd app/ && npm run lint",
+        "test": "npm run test-document && npm run test-app",
+        "test-document": "cd microservice/DocumentService && npm run test",
+        "test-app": "cd app/ && npm run test"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.3",
+        "@types/multer": "^2.0.0",
+        "concurrently": "*"
+    }
 }

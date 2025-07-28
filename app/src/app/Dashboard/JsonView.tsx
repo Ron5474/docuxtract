@@ -1,8 +1,8 @@
-"use client"
+'use client'
 
 import type React from "react"
-
 import { useState, useEffect } from "react"
+
 import {
   Box,
   Button,
@@ -15,19 +15,18 @@ import {
   IconButton,
   Tooltip,
 } from "@mui/material"
+
 import ContentCopyIcon from "@mui/icons-material/ContentCopy"
 import CheckCircleIcon from "@mui/icons-material/CheckCircle"
 import RefreshIcon from "@mui/icons-material/Refresh"
 import FormatIndentIncreaseIcon from "@mui/icons-material/FormatIndentIncrease"
 
-interface JsonEditorProps {
-  initialJson?: string
-}
+import { useDashboardState } from "./DashboardContext"
 
-export default function JSONView({
-  initialJson = '{\n  "name": "John Doe",\n  "age": 30,\n  "email": "john@example.com",\n  "isActive": true,\n  "tags": ["developer", "designer"],\n  "address": {\n    "city": "New York",\n    "country": "USA"\n  }\n}',
-}: JsonEditorProps) {
-  const [jsonText, setJsonText] = useState<string>(initialJson)
+export default function JSONView() {
+  const { currentFileJson } = useDashboardState()
+
+  const [jsonText, setJsonText] = useState<string>(currentFileJson)
   const [isValid, setIsValid] = useState<boolean>(true)
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [copied, setCopied] = useState<boolean>(false)
@@ -82,7 +81,7 @@ export default function JSONView({
   }
 
   const resetJson = (): void => {
-    setJsonText(initialJson)
+    setJsonText('{\n "name": "John Doe",\n "age": 30,\n "email": "john@example.com",\n "isActive": true,\n "tags": ["developer", "designer"],\n "address": {\n "city": "New York",\n "country": "USA"\n }\n}')
     showSnackbar("JSON reset to initial value", "info")
   }
 

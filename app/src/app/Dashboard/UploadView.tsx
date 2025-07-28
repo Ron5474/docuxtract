@@ -1,7 +1,6 @@
-"use client"
+'use client'
 
 import type React from "react"
-
 import { useState } from "react"
 import { Box, Button, Container, Paper, Typography, IconButton, Stack, LinearProgress } from "@mui/material"
 import CloudUploadIcon from "@mui/icons-material/CloudUpload"
@@ -9,9 +8,14 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import SendIcon from "@mui/icons-material/Send"
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf"
 
+import { useDashboardState } from "./DashboardContext"
+import { getJsonData } from "./actions"
+
+
 export default function UploadView() {
   const [file, setFile] = useState<File | null>(null)
   const [uploading, setUploading] = useState(false)
+  const {setCurrentPage, setCurrentFileJson} = useDashboardState()
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -25,15 +29,19 @@ export default function UploadView() {
 
   const handleSendFile = async () => {
     if (!file) return
-
     setUploading(true)
-
-    // Simulate upload process
     try {
-      // In a real application, you would send the file to your server here
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      alert("File uploaded successfully!")
+      const formData = new FormData()
+      formData.append('document', file)
+      const res = await getJsonData(formData)
+      console.log('res: ', res)
+      let jsonStringForEditor = res.answer
+      const parsedJson = JSON.parse(jsonStringForEditor)
+      console.log('JSON: ', parsedJson)
+      jsonStringForEditor = JSON.stringify(parsedJson, null, 2)
+      setCurrentFileJson(jsonStringForEditor)
       setFile(null)
+      setCurrentPage('JsonView')
     } catch {
       alert("Upload failed. Please try again.")
     } finally {
@@ -85,7 +93,6 @@ export default function UploadView() {
         ) : (
           <Box sx={{ width: "100%", mb: 2 }}>
             {uploading && <LinearProgress sx={{ mb: 2 }} />}
-
             <Paper
               variant="outlined"
               sx={{
@@ -122,4 +129,4 @@ export default function UploadView() {
       </Paper>
     </Container>
   )
-}
+} 

@@ -19,10 +19,7 @@
 
 # production
 /build
-**/build
-**/.next
-**/node_modules
-**/coverage
+
 # misc
 .DS_Store
 *.pem
