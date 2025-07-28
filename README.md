@@ -24,7 +24,7 @@ Follow these steps to set up and run the project locally:
 
 ```bash
 git clone https://github.com/Ron5474/docuxtract.git
-cd your-repo-name
+cd docuxtract
 ```
 
 ### 2. Set Up Environment Variables
