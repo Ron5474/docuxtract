@@ -20,7 +20,7 @@
         "build-app": "cd app/ && npm run build",
         "start": "concurrently --kill-others \"npm run start-document\" \"npm run start-app\"",
         "start-document": "cd microservice/DocumentService && npm start",
-        "start-app": "cd app/ && npm start",
+        "start-app": "cd app/ && npx next start -p 3000",
         "dev": "concurrently --kill-others \"npm run dev-document\" \"npm run dev-app\"",
         "dev-document": "cd microservice/DocumentService && npm run dev",
         "dev-app": "cd app/ && npm run dev",
