@@ -1,6 +1,7 @@
 # PDF to JSON WebApp
 
 A sleek and simple web application that allows users to upload PDF files and returns their contents in structured JSON format.
+Made in 72 hours for the Bootdev 2025 Hackathon
 
 🔗 **Live Site**: [pdf.johnnybravoscloud.com](https://pdf.johnnybravoscloud.com)
 
